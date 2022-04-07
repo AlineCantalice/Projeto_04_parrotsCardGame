@@ -46,31 +46,68 @@ li {
 }
 
 .cartas {
-    position: relative;
+    width: 1000px;
+    height: 326px;
+    margin: auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    padding-top: 34px;
-    padding-bottom: 34px;
+    perspective: 1000px;
 }
 
 .carta {
     height: 146px;
     width: 117px;
-    background-color: #A7E9AF;
-    border: 1px solid #99CEA8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: relative;
+    transform: scale(1);
 }
 
-@media(max-width: 400px) {
+.carta:active {
+    transform: scale(0.97);
+    transition: transform .2s;
+}
+
+.carta.flip {
+    transform: rotateY(180deg);
+  }
+
+.back-face {
+    transform: rotateY(180deg);
+}
+
+.carta:active .back-face {
+    transform: rotateY(0deg);
+}
+
+.carta:active .front-face {
+    transform: rotateY(-180deg);
+}
+
+.face {
+    width: 100%;
+    height: 100%;
+    background-color: #A7E9AF;
+    border: 1px solid #99CEA8;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, .3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    backface-visibility: hidden;
+    transition: transform .5s;
+    transform-style: preserve-3d;
+}
+
+@media(max-width: 600px) {
     h1 {
         font-size: 36px;
+        padding-bottom: 25px;
     }
 
     .cartas {
+        width: 100%;
+        height: 100%;
         flex-direction: column;
         flex-wrap: nowrap;
     }
