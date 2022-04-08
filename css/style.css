@@ -1,118 +1,89 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-html,
-body {
+html {
     font-family: 'Roboto', sans-serif;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
 }
 
-h1 {
-    font-size: 56px;
-    font-weight: 700;
-    color: #75B79E;
-}
-
-img {
-    height: 100px;
-    width: 100px;
-}
-
-li {
-    margin: 10px;
-}
-
-.conteudo {
-    width: 100vw;
-    height: 100hw;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+body {
     background-color: #EEF9BF;
-    display: flex;
-    flex-direction: column;
 }
 
 .titulo {
-    position: relative;
-    padding-top: 40px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    padding: 15px 55px;
 }
 
-.cartas {
-    width: 1000px;
-    height: 326px;
-    margin: auto;
+h1 {
+    font-weight: 700;
+    font-size: 56px;
+    text-align: center;
+    color: #75B79E;
+}
+
+ul {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    perspective: 1000px;
+    flex-wrap: wrap;
+    gap: 34px;
+    padding: 0 30px;
 }
 
 .carta {
-    height: 146px;
     width: 117px;
+    height: 146px;
     position: relative;
-    transform: scale(1);
 }
 
-.carta:active {
-    transform: scale(0.97);
-    transition: transform .2s;
+.carta.back img {
+    max-width: 100%;
+    max-height: 100%;
 }
 
-.carta.flip {
-    transform: rotateY(180deg);
-  }
-
-.back-face {
-    transform: rotateY(180deg);
-}
-
-.carta:active .back-face {
-    transform: rotateY(0deg);
-}
-
-.carta:active .front-face {
-    transform: rotateY(-180deg);
+.carta:not(.back) img {
+    min-width: 100%;
 }
 
 .face {
     width: 100%;
     height: 100%;
     background-color: #A7E9AF;
-    border: 1px solid #99CEA8;
+    border-radius: 10px;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, .3);
     display: flex;
     align-items: center;
     justify-content: center;
     position: absolute;
     backface-visibility: hidden;
-    transition: transform .5s;
+    transition: all .5s;
     transform-style: preserve-3d;
 }
 
-@media(max-width: 600px) {
+.front-face {
+    transform: rotateY(180deg);
+}
+
+.back-face.face.show {
+    transform: rotateY(-180deg);
+}
+
+.front-face.face.show {
+    transform: rotateY(0deg);
+
+}
+
+.correct {
+    -webkit-box-shadow: 0px 0px 0px 7px #367A00;
+    box-shadow: 0px 0px 0px 7px #367A00;
+    background-color: #60c90a;
+}
+
+@media (max-width:400px) {
     h1 {
         font-size: 36px;
-        padding-bottom: 25px;
     }
 
-    .cartas {
-        width: 100%;
-        height: 100%;
-        flex-direction: column;
-        flex-wrap: nowrap;
-    }
-
-    .conteudo {
-        overflow: scroll;
+    .titulo {
+        padding-left: 5px;
     }
 }
