@@ -2,11 +2,16 @@ let quantidade;
 let quantidadeViradas;
 let rodadas;
 let primeiraCarta;
-let deck = [];
+let deck;
 
 iniciarJogo();
 
 function iniciarJogo() {
+  document.querySelector("ul").innerHTML = '';
+  rodadas = 0;
+  primeiraCarta = null;
+  deck = [];
+  quantidadeViradas = 0;
   quantidade = parseInt(prompt("Com quantas cartas você quer jogar? \n O número de cartas deve ser par e estar entre 4 e 14.")) * 2;
 
   while ((quantidade % 2) !== 0 || quantidade < 4 || quantidade > 14) {
@@ -70,7 +75,7 @@ function virarCarta(event) {
     if (carta.querySelector(".front-face.face img").src !== primeiraCarta.querySelector(".front-face.face img").src) {
       setTimeout(desvirarCarta, 1000, carta);
     } else {
-
+      setTimeout(verificarFimJogo, 300);
     }
   } else {
     primeiraCarta = carta;
@@ -82,6 +87,17 @@ function desvirarCarta(carta) {
   carta.querySelector(".back-face.face").classList.remove("show");
   primeiraCarta.querySelector(".front-face.face").classList.remove("show");
   primeiraCarta.querySelector(".back-face.face").classList.remove("show");
+}
+
+function verificarFimJogo() {
+  let viradas = document.querySelectorAll(".show").length / 2;
+  let escolha;
+
+  if (viradas === quantidade) {
+    escolha = prompt(`Você ganhou em ${rodadas} jogadas! Deseja jogar novamente? (sim/não)`);
+    if (escolha === 'sim')
+      iniciarJogo();
+  }
 }
 
 
