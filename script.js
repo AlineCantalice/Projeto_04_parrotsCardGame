@@ -32,7 +32,10 @@ function adicionarCartas() {
                     </div>
                     <div class="front-face face"></div>`;
 
-    img.src = `images/carta_${i}.gif`;
+    if (i % 2 === 1)
+      img.src = `images/carta_${((i + 1) / 2)}.gif`;
+    else
+      img.src = `images/carta_${i / 2}.gif`;
 
     li.querySelector(".front-face.face").appendChild(img);
     deck.push(li);
@@ -40,11 +43,15 @@ function adicionarCartas() {
   console.log(deck)
 }
 
-function colocarCartas(){
+function colocarCartas() {
   let lista = document.querySelector("ul");
   deck.forEach(carta => {
     lista.appendChild(carta);
   });
+}
+
+function embaralharCartas(){
+  deck.sort(function(){return Math.random() - 0.5;});
 }
 
 
