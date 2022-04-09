@@ -13,10 +13,10 @@ function iniciarJogo() {
   primeiraCarta = null;
   deck = [];
   quantidadeViradas = 0;
-  quantidade = parseInt(prompt("Com quantas cartas você quer jogar? \n O número de cartas deve ser par e estar entre 4 e 14.")) * 2;
+  quantidade = parseInt(prompt("Com quantas cartas você quer jogar? \n O número de cartas deve ser par e estar entre 4 e 14."));
 
   while ((quantidade % 2) !== 0 || quantidade < 4 || quantidade > 14) {
-    quantidade = parseInt(prompt("Com quantas cartas você quer jogar? \n O número de cartas deve ser par e estar entre 4 e 14.")) * 2;
+    quantidade = parseInt(prompt("Com quantas cartas você quer jogar? \n O número de cartas deve ser par e estar entre 4 e 14."));
   }
 
   adicionarCartas();
@@ -50,7 +50,7 @@ function adicionarCartas() {
 }
 
 function colocarCartas() {
-  lista = document.querySelector("ul");
+  let lista = document.querySelector("ul");
   deck.forEach(carta => {
     lista.appendChild(carta);
   });
