@@ -1,9 +1,8 @@
 let quantidade;
-let pares;
-let movidas;
-let acertos;
+let quantidadeViradas;
+let rodadas;
+let primeiraCarta;
 let deck = [];
-const cartas = ["images/carta_1", "images/carta_2", "images/carta_3", "images/carta_4", "images/carta_5", "images/carta_6", "images/carta_7"];
 
 iniciarJogo();
 
@@ -15,6 +14,7 @@ function iniciarJogo() {
   }
 
   adicionarCartas();
+  embaralharCartas();
   colocarCartas();
 }
 
@@ -27,7 +27,7 @@ function adicionarCartas() {
     img = document.createElement("img");
     li.classList.add("carta");
     li.setAttribute("data-identifier", "carta");
-    li.innerHTML = `<div class="back face">
+    li.innerHTML = `<div class="back-face face">
                       <img src="images/front.png" alt="">
                     </div>
                     <div class="front-face face"></div>`;
@@ -38,9 +38,9 @@ function adicionarCartas() {
       img.src = `images/carta_${i / 2}.gif`;
 
     li.querySelector(".front-face.face").appendChild(img);
+    li.addEventListener("click", virarCarta);
     deck.push(li);
   }
-  console.log(deck)
 }
 
 function colocarCartas() {
@@ -50,8 +50,38 @@ function colocarCartas() {
   });
 }
 
-function embaralharCartas(){
-  deck.sort(function(){return Math.random() - 0.5;});
+function embaralharCartas() {
+  deck.sort(function () {
+    return Math.random() - 0.5;
+  });
+}
+
+function virarCarta(event) {
+  let carta = event.currentTarget;
+
+  carta.querySelector(".front-face.face").classList.add("show");
+  carta.querySelector(".back-face.face").classList.add("show");
+
+  quantidadeViradas = document.querySelectorAll(".show").length / 2;
+
+  if (quantidadeViradas % 2 === 0 && quantidadeViradas !== 0) {
+    rodadas++;
+
+    if (carta.querySelector(".front-face.face img").src !== primeiraCarta.querySelector(".front-face.face img").src) {
+      setTimeout(desvirarCarta, 1000, carta);
+    } else {
+
+    }
+  } else {
+    primeiraCarta = carta;
+  }
+}
+
+function desvirarCarta(carta) {
+  carta.querySelector(".front-face.face").classList.remove("show");
+  carta.querySelector(".back-face.face").classList.remove("show");
+  primeiraCarta.querySelector(".front-face.face").classList.remove("show");
+  primeiraCarta.querySelector(".back-face.face").classList.remove("show");
 }
 
 
