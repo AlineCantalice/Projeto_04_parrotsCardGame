@@ -3,6 +3,7 @@ let quantidadeViradas;
 let rodadas;
 let primeiraCarta;
 let deck;
+let lockClick;
 
 iniciarJogo();
 
@@ -49,7 +50,7 @@ function adicionarCartas() {
 }
 
 function colocarCartas() {
-  let lista = document.querySelector("ul");
+  lista = document.querySelector("ul");
   deck.forEach(carta => {
     lista.appendChild(carta);
   });
@@ -62,6 +63,11 @@ function embaralharCartas() {
 }
 
 function virarCarta(event) {
+
+  if (lockClick) {
+    return;
+  }
+
   let carta = event.currentTarget;
 
   carta.querySelector(".front-face.face").classList.add("show");
@@ -73,8 +79,10 @@ function virarCarta(event) {
     rodadas++;
 
     if (carta.querySelector(".front-face.face img").src !== primeiraCarta.querySelector(".front-face.face img").src) {
-      setTimeout(desvirarCarta, 1000, carta);
+      desvirarCarta(carta);
+      setTimeout(desativarClick, 1000)
     } else {
+      manterCartaCorreta(carta);
       setTimeout(verificarFimJogo, 300);
     }
   } else {
@@ -83,10 +91,17 @@ function virarCarta(event) {
 }
 
 function desvirarCarta(carta) {
-  carta.querySelector(".front-face.face").classList.remove("show");
-  carta.querySelector(".back-face.face").classList.remove("show");
-  primeiraCarta.querySelector(".front-face.face").classList.remove("show");
-  primeiraCarta.querySelector(".back-face.face").classList.remove("show");
+
+  lockClick = true;
+
+  setTimeout(() => {
+    carta.querySelector(".front-face.face").classList.remove("show");
+    carta.querySelector(".back-face.face").classList.remove("show");
+    primeiraCarta.querySelector(".front-face.face").classList.remove("show");
+    primeiraCarta.querySelector(".back-face.face").classList.remove("show");
+
+    lockClick = false;
+  }, 1000);
 }
 
 function verificarFimJogo() {
@@ -100,4 +115,11 @@ function verificarFimJogo() {
   }
 }
 
-
+function manterCartaCorreta(carta) {
+  let carta1 = carta.querySelector(".front-face.face.show");
+  let carta2 = primeiraCarta.querySelector(".front-face.face.show");
+  carta.removeEventListener('click', virarCarta);
+  carta1.classList.add("correct");
+  primeiraCarta.removeEventListener('click', virarCarta);
+  carta2.classList.add("correct");
+}
